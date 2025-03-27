@@ -9,6 +9,12 @@ ARG BUILDER_ROOTFS_IMAGE=mendix/rootfs:bionic
 # Build stage
 FROM ${BUILDER_ROOTFS_IMAGE} AS builder
 
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y nodejs
+
+WORKDIR /opt/mendix/build # Győződjünk meg róla, hogy a helyes mappában dolgozunk
+RUN npm install puppeteer
+
 # Build-time variables
 ARG BUILD_PATH=project
 ARG DD_API_KEY
